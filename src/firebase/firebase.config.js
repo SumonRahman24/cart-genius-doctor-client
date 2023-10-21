@@ -1,13 +1,15 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAAxJOe6DBisUObQBuQM5S6nA6RHVdxIXA",
-  authDomain: "car-genius-doctor.firebaseapp.com",
-  projectId: "car-genius-doctor",
-  storageBucket: "car-genius-doctor.appspot.com",
-  messagingSenderId: "290338243659",
-  appId: "1:290338243659:web:71790725a281ffb79ab9ce",
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PROJECTID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APPID,
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = 
+const auth = getAuth(app);
+export default auth;
