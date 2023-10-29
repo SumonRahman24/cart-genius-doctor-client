@@ -1,6 +1,17 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => alert("logout success"))
+      .catch((error) => console.log(error));
+  };
+
   const navLinks = (
     <>
       <li>
@@ -15,6 +26,11 @@ const Navbar = () => {
       <li>
         <NavLink to={"/blog"}>Blog</NavLink>
       </li>
+      {user?.email && (
+        <li>
+          <NavLink to={"/bookings"}>My Bookings</NavLink>
+        </li>
+      )}
       <li>
         <NavLink to={"/contact"}>Contact</NavLink>
       </li>
@@ -22,7 +38,7 @@ const Navbar = () => {
   );
 
   return (
-    <>
+    <div className="container  m-auto px-2 md:px-10">
       <div className="navbar bg-base-100 mt-4">
         <div className="navbar-start flex">
           <div className="flex flex-row-reverse">
@@ -45,7 +61,7 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 z-10"
               >
                 {navLinks}
               </ul>
@@ -56,7 +72,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal font-semibold text-[#444444] px-1">
+          <ul className="menu menu-horizontal font-semibold text-[#444444] px-1 ">
             {navLinks}
           </ul>
         </div>
@@ -96,13 +112,36 @@ const Navbar = () => {
             </div>
           </div>
           <div>
-            <button className="btn btn-sm md:btn-md   btn-outline rounded text-red-600 border-red-600 border-1 capitalize">
-              Appointment
-            </button>
+            {user ? (
+              <div className="dropdown dropdown-end z-10">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img src={user?.photoURL} />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <h2>{user?.displayName}</h2>
+                  </li>
+                  <li>
+                    <a onClick={handleLogout}>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-sm md:btn-md   btn-outline rounded text-red-600 border-red-600 border-1 capitalize">
+                  Appointment
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

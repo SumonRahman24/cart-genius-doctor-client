@@ -3,7 +3,7 @@ import Navbar from "../components/Header.jsx/Navbar";
 
 const MainLayout = () => {
   return (
-    <div className="container  m-auto px-2 md:px-10">
+    <div className="">
       <Navbar />
       <Outlet />
     </div>

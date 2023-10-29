@@ -7,3 +7,7 @@
 body {
   font-family: "Inter", sans-serif;
 }
+
+.banner-gradient {
+  background: linear-gradient(90deg, #151515 0%, rgba(21, 21, 21, 0) 100%);
+}
